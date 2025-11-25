@@ -23,3 +23,15 @@ export interface CartContextType {
   getTotalItems: () => number;
   getTotalPrice: () => number;
 }
+
+type TDrinks = {
+  id: number
+  name: string
+  content: string
+  price: number
+  num?: number
+}
+export type {
+  TDrinks,
+}
+

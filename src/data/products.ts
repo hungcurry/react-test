@@ -1,6 +1,18 @@
 // 模擬產品資料
 
 import { Product } from '../types';
+import type { TDrinks } from '@/types';
+
+const data: TDrinks[] = [
+  {
+    id: 1,
+    name: '珍珠奶茶',
+    content: '香濃奶茶搭配QQ珍珠',
+    price: 50,
+    num: 20,
+  }
+]
+// console.log('data:', data);
 
 export const mockProducts: Product[] = [
   {

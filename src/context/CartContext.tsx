@@ -1,27 +1,78 @@
 // 購物車狀態管理 Context
 
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { CartItem, Product, CartContextType } from '../types';
+import { createContext, useContext, useReducer, ReactNode } from 'react';
+// import { CartItem, Product, CartContextType } from '../types';
 
+// #region types total
+// 實際 資料架構
+// items: [
+//   {
+//     product: {
+//       id: number;
+//       title: string;
+//       description: string;
+//       price: number;
+//       image: string;
+//       category: string;
+//     };
+//     quantity: number;
+//   },
+// ]
+type TProduct = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+}
+type TCartItem = {
+  product: TProduct;
+  quantity: number;
+}
+// 購物車狀態
+type TCartState = {
+  items: TCartItem[];
+}
 // 購物車動作類型定義
-type CartAction =
-  | { type: 'ADD_TO_CART'; payload: Product }
+type TCartAction =
+  | { type: 'ADD_TO_CART'; payload: TProduct }
   | { type: 'REMOVE_FROM_CART'; payload: number }
   | { type: 'UPDATE_QUANTITY'; payload: { productId: number; quantity: number } }
   | { type: 'CLEAR_CART' };
 
-// 購物車狀態
-interface CartState {
-  items: CartItem[];
+type TProvid = {
+  cartItems: TCartItem[];
+  addToCart: (product: TProduct) => void;
+  removeFromCart: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
+  clearCart: () => void;
+  getTotalItems: () => number;
+  getTotalPrice: () => number;
 }
+// #endregion
 
 // 初始狀態
-const initialState: CartState = {
+const initialState: TCartState = {
   items: [],
 };
+// 建立 Context
+const CartContext = createContext<TProvid | null>(null)
+// 自訂 Hook - 讓元件更容易使用 Context
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('Context not found.')
+  }
+  return context;
+}
 
 // Reducer 函式
-const cartReducer = (state: CartState, action: CartAction): CartState => {
+const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
+
+  console.log(`state` , state);
+  console.log(`action` , action);
+
   switch (action.type) {
     case 'ADD_TO_CART': {
       const existingItem = state.items.find(item => item.product.id === action.payload.id);
@@ -84,14 +135,11 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
   }
 };
 
-// 建立 Context
-const CartContext = createContext<CartContextType | undefined>(undefined);
-
 // Provider 元件
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: TProduct) => {
     dispatch({ type: 'ADD_TO_CART', payload: product });
   };
 
@@ -115,7 +163,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return state.items.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   };
 
-  const value: CartContextType = {
+  const provideValue = {
     cartItems: state.items,
     addToCart,
     removeFromCart,
@@ -126,17 +174,8 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <CartContext.Provider value={value}>
-      {children}
+    <CartContext.Provider value={ provideValue }>
+      { children }
     </CartContext.Provider>
   );
-};
-
-// 自訂 Hook - 讓元件更容易使用 Context
-export const useCart = (): CartContextType => {
-  const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error('useCart must be used within a CartProvider');
-  }
-  return context;
 };

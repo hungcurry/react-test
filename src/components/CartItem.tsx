@@ -1,22 +1,28 @@
 // 購物車項目元件
 
-import React from 'react';
+import { SyntheticEvent } from 'react'
+// import React from 'react';
 import { CartItem } from '../types';
 import { useCart } from '../context/CartContext';
 
-interface CartItemComponentProps {
-  item: CartItem;
+type TProps = {
+  data: CartItem;
 }
 
-const CartItemComponent: React.FC<CartItemComponentProps> = ({ item }) => {
+const CartItemComponent= ({ data } : TProps) => {
   const { updateQuantity, removeFromCart } = useCart();
 
   const handleQuantityChange = (newQuantity: number) => {
-    updateQuantity(item.product.id, newQuantity);
+    updateQuantity(data.product.id, newQuantity);
   };
 
+  const handleError = (e:SyntheticEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik0xNzUgMTI1SDIyNVYxNzVIMTc1VjEyNVoiIGZpbGw9IiNFMkU4RjAiLz4KPHN2Zz4K';
+  }
+
   const handleRemove = () => {
-    removeFromCart(item.product.id);
+    removeFromCart(data.product.id);
   };
 
   const formatPrice = (price: number) => {
@@ -30,30 +36,27 @@ const CartItemComponent: React.FC<CartItemComponentProps> = ({ item }) => {
   return (
     <div className="cart-item">
       <img 
-        src={item.product.image} 
-        alt={item.product.title}
+        src={data.product.image} 
+        alt={data.product.title}
         className="cart-item-image"
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik0zNSAzNUg0NVY0NUgzNVYzNVoiIGZpbGw9IiNFMkU4RjAiLz4KPC9zdmc+';
-        }}
+        onError={ handleError}
       />
       <div className="cart-item-info">
-        <div className="cart-item-title">{item.product.title}</div>
-        <div className="cart-item-price">{formatPrice(item.product.price)}</div>
+        <div className="cart-item-title">{data.product.title}</div>
+        <div className="cart-item-price">{formatPrice(data.product.price)}</div>
       </div>
       <div className="cart-item-controls">
         <button 
           className="quantity-btn"
-          onClick={() => handleQuantityChange(item.quantity - 1)}
-          disabled={item.quantity <= 1}
+          onClick={() => handleQuantityChange(data.quantity - 1)}
+          disabled={data.quantity <= 1}
         >
           −
         </button>
-        <span className="quantity-display">{item.quantity}</span>
+        <span className="quantity-display">{data.quantity}</span>
         <button 
           className="quantity-btn"
-          onClick={() => handleQuantityChange(item.quantity + 1)}
+          onClick={() => handleQuantityChange(data.quantity + 1)}
         >
           +
         </button>

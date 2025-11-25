@@ -1,8 +1,8 @@
 // Header 元件
 
-// import React from 'react';
+import React from 'react';
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="header-content">

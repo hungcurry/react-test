@@ -1,27 +1,33 @@
 // 產品卡片元件
 
-import React from 'react';
+import { SyntheticEvent } from 'react'
+// import React from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
 
-interface ProductCardProps {
-  product: Product;
+type TProps = {
+  product: Product
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard = ({ product }: TProps) => {
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
     addToCart(product);
-  };
+  }
 
-  const formatPrice = (price: number) => {
+  const handleError = (e:SyntheticEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik0xNzUgMTI1SDIyNVYxNzVIMTc1VjEyNVoiIGZpbGw9IiNFMkU4RjAiLz4KPHN2Zz4K';
+  }
+
+  const handleFormatPrice = (price: number) => {
     return new Intl.NumberFormat('zh-TW', {
       style: 'currency',
       currency: 'TWD',
       minimumFractionDigits: 0,
     }).format(price);
-  };
+  }
 
   return (
     <div className="product-card">
@@ -29,15 +35,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         src={product.image} 
         alt={product.title}
         className="product-image"
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik0xNzUgMTI1SDIyNVYxNzVIMTc1VjEyNVoiIGZpbGw9IiNFMkU4RjAiLz4KPHN2Zz4K';
-        }}
+        onError={handleError}
       />
       <div className="product-info">
         <h3 className="product-title">{product.title}</h3>
         <p className="product-description">{product.description}</p>
-        <div className="product-price">{formatPrice(product.price)}</div>
+        <div className="product-price">{handleFormatPrice(product.price)}</div>
         <button 
           className="add-to-cart-btn"
           onClick={handleAddToCart}

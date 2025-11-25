@@ -18,7 +18,18 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Coustom */
+    // 識別js檔案
+    "allowJs": true,
+    // 進行js檔案的型別檢查
+    "checkJs": false,
+    // 讓ts 看懂 @
+    "baseUrl": ".", 
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
