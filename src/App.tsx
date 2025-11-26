@@ -10,6 +10,7 @@ import ProductList from './pages/ProductList'
 import Cart from './pages/Cart'
 
 const App: React.FC = () => {
+
   return (
     <CartProvider>
       <div className="App">

@@ -23,6 +23,7 @@ type TProvid = {
   reset: () => void;
 }
 // 4.初始狀態 ( 請注意通常初始的狀態會是一個物件)。
+// → 能隨時擴充
 const initialState: TState = { 
   count: 0 
 }

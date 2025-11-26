@@ -52,7 +52,8 @@ type TProvid = {
 }
 // #endregion
 
-// 初始狀態
+// 初始狀態 ( 請注意通常初始的狀態會是一個物件)。
+// 能隨時擴充
 const initialState: TCartState = {
   items: [],
 };
@@ -69,9 +70,12 @@ export const useCart = () => {
 
 // Reducer 函式
 const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
-
   console.log(`state` , state);
   console.log(`action` , action);
+
+  // state : {
+  //   items: []
+  // }
 
   switch (action.type) {
     case 'ADD_TO_CART': {
@@ -83,7 +87,7 @@ const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
           ...state,
           items: state.items.map(item =>
             item.product.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
+              ? { ...item, quantity: (item.quantity ?? 0) + 1 }
               : item
           ),
         };
