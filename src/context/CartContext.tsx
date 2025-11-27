@@ -3,6 +3,7 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react';
 // import { CartItem, Product, CartContextType } from '../types';
 
+// 1. 定義資料的型別
 // #region types total
 // 實際 資料架構
 // items: [
@@ -34,13 +35,16 @@ type TCartItem = {
 type TCartState = {
   items: TCartItem[];
 }
-// 購物車動作類型定義
+// #endregion
+
+// 2. 定義 action 型別
 type TCartAction =
   | { type: 'ADD_TO_CART'; payload: TProduct }
   | { type: 'REMOVE_FROM_CART'; payload: number }
   | { type: 'UPDATE_QUANTITY'; payload: { productId: number; quantity: number } }
   | { type: 'CLEAR_CART' };
 
+// 3. Context 型別：一定要寫 <TProvid | null>
 type TProvid = {
   cartItems: TCartItem[];
   addToCart: (product: TProduct) => void;
@@ -50,14 +54,12 @@ type TProvid = {
   getTotalItems: () => number;
   getTotalPrice: () => number;
 }
-// #endregion
 
-// 初始狀態 ( 請注意通常初始的狀態會是一個物件)。
-// 能隨時擴充
+// 4.初始狀態 ( 請注意通常初始的狀態會是一個物件 / 能隨時擴充)。
 const initialState: TCartState = {
   items: [],
 };
-// 建立 Context
+// 5. 建立 Context
 const CartContext = createContext<TProvid | null>(null)
 // 自訂 Hook - 讓元件更容易使用 Context
 export const useCart = () => {
@@ -68,13 +70,25 @@ export const useCart = () => {
   return context;
 }
 
-// Reducer 函式
+// 7. reducer：TS 自動推論 state 與 action 型別
 const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
   console.log(`state` , state);
   console.log(`action` , action);
 
   // state : {
-  //   items: []
+      // items: [
+      //   {
+      //     product: {
+      //       id: number;
+      //       title: string;
+      //       description: string;
+      //       price: number;
+      //       image: string;
+      //       category: string;
+      //     };
+      //     quantity: number;
+      //   },
+      // ]
   // }
 
   switch (action.type) {
@@ -85,16 +99,19 @@ const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
         // 如果商品已存在，增加數量
         return {
           ...state,
+          // 這邊要比對id  所以用map跑回圈 
           items: state.items.map(item =>
             item.product.id === action.payload.id
               ? { ...item, quantity: (item.quantity ?? 0) + 1 }
               : item
           ),
         };
-      } else {
+      } 
+      else {
         // 如果商品不存在，新增到購物車
         return {
           ...state,
+          // 製作新陣列 記憶體有變 React 才會重新渲染, 不能用push() 媽的...
           items: [...state.items, { product: action.payload, quantity: 1 }],
         };
       }
@@ -139,7 +156,7 @@ const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
   }
 };
 
-// Provider 元件
+// 6. 父元件=> Provider
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
