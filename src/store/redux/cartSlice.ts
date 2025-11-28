@@ -1,4 +1,3 @@
-// src/store/redux/cartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // RTK 最大優勢：可以直接修改 state（Immer 幫你產生不可變資料）
 // → 不用 .map()、不用建立新陣列 👍
@@ -24,6 +23,7 @@ const initialState: TCartState = {
 
 const cartSlice = createSlice({
   name: 'cart',
+  // initialState 是初始的狀態
   initialState,
   reducers: {
     // 加入購物車
@@ -76,12 +76,16 @@ const cartSlice = createSlice({
   },
 });
 
-// actions
-export const {
+
+
+// 1.actions
+// 匯出 action creators（要給 React component 用）
+export const { 
   addToCart,
   removeFromCart,
   updateQuantity,
-  clearCart,
+  clearCart 
 } = cartSlice.actions;
-
+// 2.reducer
+// 匯出 reducer（要給 store 用）
 export default cartSlice.reducer;

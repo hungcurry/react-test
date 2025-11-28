@@ -7,8 +7,7 @@ import { Link, useLocation } from 'react-router-dom'
 // import { useCart } from '../context/CartContext'
 
 // ~Redux方式
-import { useSelector } from 'react-redux';
-import { selectTotalItems } from '@/store/redux/cartSelectors';
+import { useTotalItems } from '@/store/redux/cartSelectors';
 
 // ~Zustand方式
 
@@ -20,7 +19,7 @@ const Navbar: React.FC = () => {
   // const { getTotalItems } = useCart()
 
   // ~Redux方式
-  const getTotalItems = useSelector(selectTotalItems)
+  const getTotalItems = useTotalItems();
 
   // ~Zustand方式
 

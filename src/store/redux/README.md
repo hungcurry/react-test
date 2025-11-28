@@ -39,16 +39,15 @@ dispatch(addToCart(product));
 
 📌 取得購物車資料（用 selector）
 ```jsx
-import { useSelector } from 'react-redux';
-import { selectCartItems } from '@/store/redux/cartSelectors';
-
-const cartItems = useSelector(selectCartItems);
+import { useTotalItems } from '@/store/redux/cartSelectors';
+const cartItems = useTotalItems();
 ```
 
 📌 總數量 & 總價格
 ```jsx
-const totalItems = useSelector(selectTotalItems);
-const totalPrice = useSelector(selectTotalPrice);
+import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
+const cartItems = useCartItems();
+const getTotalPrice = useTotalPrice();
 ```
 
 📌 更新數量
@@ -62,3 +61,6 @@ dispatch(updateQuantity({ productId: 10, quantity: 3 }));
 dispatch(removeFromCart( id ));
 dispatch(clearCart());
 ```
+
+
+

@@ -9,8 +9,7 @@ import CartItemComponent from '../components/CartItem';
 // ~Redux方式
 import { useDispatch } from 'react-redux';
 import { clearCart as clearCartAction } from '@/store/redux/cartSlice';
-import { useSelector } from 'react-redux';
-import { selectCartItems , selectTotalPrice } from '@/store/redux/cartSelectors';
+import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
 
 // ~Zustand方式
 
@@ -28,8 +27,8 @@ const Cart: React.FC = () => {
 
   // ~Redux方式
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectCartItems);
-  const getTotalPrice = useSelector(selectTotalPrice)
+  const cartItems = useCartItems();
+  const getTotalPrice = useTotalPrice();
   const clearCart = () => {
     dispatch(clearCartAction());
   }

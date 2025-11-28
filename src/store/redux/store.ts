@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+// 匯入各 Slice 的 reducer
 import cartReducer from '@/store/redux/cartSlice';
 
 // import cartReducer from './cart/cartSlice';
@@ -7,8 +8,10 @@ import cartReducer from '@/store/redux/cartSlice';
 // ✔ 全專案就靠這個來提供狀態
 
 export const store = configureStore({
-  reducer: {
+  reducer: {  
+    //  這裡寫法 會影響 useSelector 取值的名子    
     cart: cartReducer,
+    // 變成 state.cart.items,
     // user: userReducer,
   },
 });
