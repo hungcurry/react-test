@@ -3,27 +3,48 @@
 import { SyntheticEvent } from 'react'
 // import React from 'react';
 import { CartItem } from '../types';
-import { useCart } from '../context/CartContext';
+
+// ~useContext + useReducer方式
+// import { useCart } from '../context/CartContext';
+
+// ~Redux方式
+import { useDispatch } from 'react-redux';
+import { updateQuantity , removeFromCart } from '@/store/redux/cartSlice';
+
+// ~Zustand方式
+
 
 type TProps = {
   data: CartItem;
 }
 
 const CartItemComponent= ({ data } : TProps) => {
-  const { updateQuantity, removeFromCart } = useCart();
+  // ~useContext + useReducer方式
+  // const { updateQuantity, removeFromCart } = useCart();
+
+  // ~Redux方式
+  const dispatch = useDispatch();
 
   const handleQuantityChange = (newQuantity: number) => {
-    updateQuantity(data.product.id, newQuantity);
+    // ~useContext + useReducer方式
+    // updateQuantity(data.product.id, newQuantity);
+
+    // ~Redux方式
+    dispatch(updateQuantity({ productId: data.product.id, quantity: newQuantity }));
+  };
+
+  const handleRemove = () => {
+    // ~useContext + useReducer方式
+    // removeFromCart(data.product.id);
+
+    // ~Redux方式
+    dispatch(removeFromCart(data.product.id));
   };
 
   const handleError = (e:SyntheticEvent<HTMLImageElement>) => {
     const target = e.target as HTMLImageElement;
     target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik0xNzUgMTI1SDIyNVYxNzVIMTc1VjEyNVoiIGZpbGw9IiNFMkU4RjAiLz4KPHN2Zz4K';
   }
-
-  const handleRemove = () => {
-    removeFromCart(data.product.id);
-  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('zh-TW', {

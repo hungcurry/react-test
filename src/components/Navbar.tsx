@@ -2,11 +2,28 @@
 
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useCart } from '../context/CartContext'
+
+// ~useContext + useReducer方式
+// import { useCart } from '../context/CartContext'
+
+// ~Redux方式
+import { useSelector } from 'react-redux';
+import { selectTotalItems } from '@/store/redux/cartSelectors';
+
+// ~Zustand方式
+
 
 const Navbar: React.FC = () => {
   const location = useLocation()
-  const { getTotalItems } = useCart()
+
+  // ~useContext + useReducer方式
+  // const { getTotalItems } = useCart()
+
+  // ~Redux方式
+  const getTotalItems = useSelector(selectTotalItems)
+
+  // ~Zustand方式
+
 
   const navItems = [
     {
@@ -64,7 +81,8 @@ const Navbar: React.FC = () => {
             />
           </svg>
           {
-            getTotalItems() > 0 && <span className="cart-badge">{getTotalItems()}</span>
+            // getTotalItems() > 0 && <span className="cart-badge">{getTotalItems()}</span>
+            getTotalItems > 0 && <span className="cart-badge">{ getTotalItems }</span>
           }
         </Link>
       </div>

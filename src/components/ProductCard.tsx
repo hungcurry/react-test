@@ -3,17 +3,37 @@
 import { SyntheticEvent } from 'react'
 // import React from 'react';
 import { Product } from '../types';
-import { useCart } from '../context/CartContext';
+
+// ~useContext + useReducer方式
+// import { useCart } from '../context/CartContext';
+
+// ~Redux方式
+import { useDispatch } from 'react-redux';
+import { addToCart } from '@/store/redux/cartSlice';
+
+// ~Zustand方式
 
 type TProps = {
   product: Product
 }
 
 const ProductCard = ({ product }: TProps) => {
-  const { addToCart } = useCart();
+
+  // ~useContext + useReducer方式
+  // const { addToCart } = useCart();
+
+  // ~Redux方式
+  const dispatch = useDispatch();
+
+  // ~Zustand方式
 
   const handleAddToCart = () => {
-    addToCart(product);
+    // addToCart(product);
+
+    // ~Redux方式
+    dispatch(addToCart(product));
+
+    // ~Zustand方式
   }
 
   const handleError = (e:SyntheticEvent<HTMLImageElement>) => {
