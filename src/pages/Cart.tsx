@@ -7,11 +7,12 @@ import CartItemComponent from '../components/CartItem';
 // import { useCart } from '../context/CartContext';
 
 // ~Redux方式
-import { useDispatch } from 'react-redux';
-import { clearCart as clearCartAction } from '@/store/redux/cartSlice';
-import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
+// import { useDispatch } from 'react-redux';
+// import { clearCart as clearCartAction } from '@/store/redux/cartSlice';
+// import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
 
 // ~Zustand方式
+import { useCartStore } from '@/store/zustand/useCartStore';
 
 // type TProps = {
 //   cartItems: CartItem[];
@@ -26,15 +27,15 @@ const Cart: React.FC = () => {
   // const { cartItems, clearCart, getTotalPrice } = useCart();
 
   // ~Redux方式
-  const dispatch = useDispatch();
-  const cartItems = useCartItems();
-  const getTotalPrice = useTotalPrice();
-  const clearCart = () => {
-    dispatch(clearCartAction());
-  }
+  // const dispatch = useDispatch();
+  // const cartItems = useCartItems();
+  // const getTotalPrice = useTotalPrice();
+  // const clearCart = () => {
+  //   dispatch(clearCartAction());
+  // }
 
   // ~Zustand方式
-
+  const { items : cartItems, clearCart, getTotalPrice } = useCartStore();
 
   const handleFormatPrice = (price: number) => {
     return new Intl.NumberFormat('zh-TW', {
@@ -100,8 +101,8 @@ const Cart: React.FC = () => {
 
           <div className="cart-summary">
             <div className="total-price">
-              {/* 總計：{handleFormatPrice(getTotalPrice())} */}
-              總計：{handleFormatPrice(getTotalPrice)}
+              總計：{handleFormatPrice(getTotalPrice())}
+              {/* 總計：{handleFormatPrice(getTotalPrice)} */}
             </div>
 
             <button

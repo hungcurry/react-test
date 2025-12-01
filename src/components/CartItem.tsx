@@ -8,11 +8,11 @@ import { CartItem } from '../types';
 // import { useCart } from '../context/CartContext';
 
 // ~Redux方式
-import { useDispatch } from 'react-redux';
-import { updateQuantity , removeFromCart } from '@/store/redux/cartSlice';
+// import { useDispatch } from 'react-redux';
+// import { updateQuantity , removeFromCart } from '@/store/redux/cartSlice';
 
 // ~Zustand方式
-
+import { useCartStore } from '@/store/zustand/useCartStore';
 
 type TProps = {
   data: CartItem;
@@ -23,14 +23,20 @@ const CartItemComponent= ({ data } : TProps) => {
   // const { updateQuantity, removeFromCart } = useCart();
 
   // ~Redux方式
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+
+  // ~Zustand方式
+  const { updateQuantity, removeFromCart } = useCartStore();
 
   const handleQuantityChange = (newQuantity: number) => {
     // ~useContext + useReducer方式
     // updateQuantity(data.product.id, newQuantity);
 
     // ~Redux方式
-    dispatch(updateQuantity({ productId: data.product.id, quantity: newQuantity }));
+    // dispatch(updateQuantity({ productId: data.product.id, quantity: newQuantity }));
+
+    // ~Zustand方式
+    updateQuantity(data.product.id, newQuantity);
   };
 
   const handleRemove = () => {
@@ -38,7 +44,10 @@ const CartItemComponent= ({ data } : TProps) => {
     // removeFromCart(data.product.id);
 
     // ~Redux方式
-    dispatch(removeFromCart(data.product.id));
+    // dispatch(removeFromCart(data.product.id));
+
+    // ~Zustand方式
+    removeFromCart(data.product.id);
   };
 
   const handleError = (e:SyntheticEvent<HTMLImageElement>) => {

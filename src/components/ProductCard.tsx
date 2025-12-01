@@ -8,10 +8,11 @@ import { Product } from '../types';
 // import { useCart } from '../context/CartContext';
 
 // ~Redux方式
-import { useDispatch } from 'react-redux';
-import { addToCart } from '@/store/redux/cartSlice';
+// import { useDispatch } from 'react-redux';
+// import { addToCart } from '@/store/redux/cartSlice';
 
 // ~Zustand方式
+import { useCartStore } from '@/store/zustand/useCartStore';
 
 type TProps = {
   product: Product
@@ -23,17 +24,20 @@ const ProductCard = ({ product }: TProps) => {
   // const { addToCart } = useCart();
 
   // ~Redux方式
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // ~Zustand方式
+  const { addToCart } = useCartStore()
+  
 
   const handleAddToCart = () => {
     // addToCart(product);
 
     // ~Redux方式
-    dispatch(addToCart(product));
+    // dispatch(addToCart(product));
 
     // ~Zustand方式
+    addToCart(product);
   }
 
   const handleError = (e:SyntheticEvent<HTMLImageElement>) => {

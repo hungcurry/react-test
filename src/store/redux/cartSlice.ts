@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+// PayloadAction<T> 只是 TypeScript 用來標記 payload 型別的，不加也能跑，加了比較安全。
 // RTK 最大優勢：可以直接修改 state（Immer 幫你產生不可變資料）
 // → 不用 .map()、不用建立新陣列 👍
 
@@ -75,7 +76,6 @@ const cartSlice = createSlice({
     },
   },
 });
-
 
 
 // 1.actions

@@ -10,9 +10,6 @@ import { Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { store } from '@/store/redux/store';
 
-// ~Zustand方式
-
-
 import Navbar from './components/Navbar'
 // Pages
 import Home from './pages/Home'
@@ -22,6 +19,13 @@ import Cart from './pages/Cart'
 const App: React.FC = () => {
 
   return (
+
+    // !影響檔案
+    // App.tsx
+    // Navbar.tsx
+    // ProductCard.tsx
+    // Cart.tsx
+    // CartItem.tsx
 
     // ~useContext + useReducer方式
     // <CartProvider>
@@ -48,9 +52,6 @@ const App: React.FC = () => {
         </Routes>
       </div>
     </Provider>
-
-    // ~Zustand方式
-
   )
 }
 
