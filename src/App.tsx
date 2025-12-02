@@ -7,8 +7,8 @@ import { Routes, Route } from 'react-router-dom'
 // import { CartProvider } from './context/CartContext'
 
 // ~Redux方式
-import { Provider } from 'react-redux';
-import { store } from '@/store/redux/store';
+// import { Provider } from 'react-redux';
+// import { store } from '@/store/redux/store';
 
 import Navbar from './components/Navbar'
 // Pages
@@ -41,17 +41,29 @@ const App: React.FC = () => {
     // </CartProvider>
 
     // ~Redux方式
-    <Provider store={store}>
-      <div className="App">
-        <Navbar />
+    // <Provider store={store}>
+    //   <div className="App">
+    //     <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<ProductList />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </div>
-    </Provider>
+    //     <Routes>
+    //       <Route path="/" element={<Home />} />
+    //       <Route path="/products" element={<ProductList />} />
+    //       <Route path="/cart" element={<Cart />} />
+    //     </Routes>
+    //   </div>
+    // </Provider>
+
+     // ~Zustand方式
+    <div className="App">
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </div>
+
   )
 }
 

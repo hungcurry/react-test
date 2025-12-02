@@ -1,5 +1,9 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
+// pnpm install immer
+import { devtools } from 'zustand/middleware'
+import { immer } from 'zustand/middleware/immer'
 
+// ----------- Types -----------
 type TProduct = {
   id: number;
   title: string;
@@ -8,10 +12,12 @@ type TProduct = {
   image: string;
   category: string;
 };
+
 type TCartItem = {
   product: TProduct;
   quantity: number;
 };
+
 type TCartStore = {
   items: TCartItem[];
   addToCart: (product: TProduct) => void;
@@ -22,63 +28,89 @@ type TCartStore = {
   getTotalPrice: () => number;
 };
 
-// ----------- Zustand -----------
-export const useCartStore = create<TCartStore>((set, get) => ({
-  items: [],
+// ----------- v5寫法 + devtools + immer -----------
+export const useCartStore = create<TCartStore>()(
+  devtools(
+    immer((set, get) => ({
+      items: [],
 
-  addToCart: (product) => {
-    const { items } = get();
-    const existing = items.find(i => i.product.id === product.id);
+      // items: [
+      //   {
+      //     product: {
+      //       id: number;
+      //       title: string;
+      //       description: string;
+      //       price: number;
+      //       image: string;
+      //       category: string;
+      //     };
+      //     quantity: number;
+      //   },
+      // ]
 
-    if (existing) {
-      set({
-        items: items.map(i =>
-          i.product.id === product.id
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
-        )
-      });
-    } else {
-      set({
-        items: [...items, { product, quantity: 1 }]
-      });
-    }
-  },
+      addToCart: (product) => {
+        const { items } = get();
+        console.log('store', get());
+        console.log('items', items);
 
-  removeFromCart: (productId) => {
-    const { items } = get();
-    set({ items: items.filter(i => i.product.id !== productId) });
-  },
+        const existing = items.find(item => item.product.id === product.id);
 
-  updateQuantity: (productId, quantity) => {
-    const { items } = get();
+        if (existing) {
+          set({
+            items: items.map(item =>
+              item.product.id === product.id
+                ? { ...item, quantity: (item.quantity ?? 0)+ 1 }
+                : item
+            )
+          });
+        } 
+        else {
+          set({
+            items: [
+              ...items, 
+              { product, quantity: 1 }
+            ]
+          });
+        }
+      },
 
-    if (quantity <= 0) {
-      set({ items: items.filter(i => i.product.id !== productId) });
-      return;
-    }
+      removeFromCart: (productId) => {
+        const { items } = get();
+        set({ items: items.filter(i => i.product.id !== productId) });
+      },
+      updateQuantity: (productId, quantity) => {
+        const { items } = get();
 
-    set({
-      items: items.map(i =>
-        i.product.id === productId
-          ? { ...i, quantity }
-          : i
-      )
-    });
-  },
+        if (quantity <= 0) {
+          set({ items: items.filter(i => i.product.id !== productId) });
+          return;
+        }
 
-  clearCart: () => set({ items: [] }),
+        set({
+          items: items.map(i =>
+            i.product.id === productId
+              ? { ...i, quantity }
+              : i
+          )
+        });
+      },
 
-  getTotalItems: () => {
-    return get().items.reduce((total, item) => total + item.quantity, 0);
-  },
+      clearCart: () => set({ items: [] }),
 
-  getTotalPrice: () => {
-    return get().items.reduce(
-      (total, item) => total + item.product.price * item.quantity,
-      0
-    );
-  },
+      // computed values
+      getTotalItems: () => {
+        return get().items.reduce((total, item) => total + item.quantity, 0);
+      },
+      getTotalPrice: () => {
+        return get().items.reduce(
+          (total, item) => total + item.product.price * item.quantity,
+          0
+        );
+      },
 
-  
-}));
+      
+
+    })),
+    { name: 'cart-store' }
+  )
+);
