@@ -1,7 +1,7 @@
 import { create } from 'zustand'
-// pnpm install immer
 import { devtools } from 'zustand/middleware'
-import { immer } from 'zustand/middleware/immer'
+// pnpm install immer
+// import { immer } from 'zustand/middleware/immer'
 
 // ----------- Types -----------
 type TProduct = {
@@ -28,10 +28,10 @@ type TCartStore = {
   getTotalPrice: () => number;
 };
 
-// ----------- v5寫法 + devtools + immer -----------
+// ----------- v5寫法 + devtools -----------
 export const useCartStore = create<TCartStore>()(
   devtools(
-    immer((set, get) => ({
+    (set, get) => ({
       items: [],
 
       // items: [
@@ -73,7 +73,6 @@ export const useCartStore = create<TCartStore>()(
           });
         }
       },
-
       removeFromCart: (productId) => {
         const { items } = get();
         set({ items: items.filter(i => i.product.id !== productId) });
@@ -94,10 +93,12 @@ export const useCartStore = create<TCartStore>()(
           )
         });
       },
-
-      clearCart: () => set({ items: [] }),
+      clearCart: () => {
+        return set({ items: [] });
+      },
 
       // computed values
+      // 這種不需要命名 action
       getTotalItems: () => {
         return get().items.reduce((total, item) => total + item.quantity, 0);
       },
@@ -109,8 +110,7 @@ export const useCartStore = create<TCartStore>()(
       },
 
       
-
-    })),
+    }),
     { name: 'cart-store' }
   )
 );
