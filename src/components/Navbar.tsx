@@ -7,10 +7,10 @@ import { Link, useLocation } from 'react-router-dom'
 // import { useCart } from '@/context/complex/CartContext'
 
 // ~Redux方式
-import { useTotalItems } from '@/store/redux/cartSelectors';
+// import { useTotalItems } from '@/store/redux/cartSelectors';
 
 // ~Zustand方式
-// import { useCartStore } from '@/store/zustand/useCartStore';
+import { useCartStore } from '@/store/zustand/useCartStore';
 
 const Navbar: React.FC = () => {
   const location = useLocation()
@@ -19,10 +19,10 @@ const Navbar: React.FC = () => {
   // const { getTotalItems } = useCart()
 
   // ~Redux方式
-  const getTotalItems = useTotalItems();
+  // const getTotalItems = useTotalItems();
 
   // ~Zustand方式
-  // const getTotalItems = useCartStore((s) => s.getTotalItems() );
+  const getTotalItems = useCartStore((s) => s.getTotalItems() );
 
   const navItems = [
     {

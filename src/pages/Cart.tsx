@@ -7,12 +7,12 @@ import CartItemComponent from '../components/CartItem';
 // import { useCart } from '@/context/complex/CartContext'
 
 // ~Redux方式
-import { useDispatch } from 'react-redux';
-import { clearCart as clearCartAction } from '@/store/redux/cartSlice';
-import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
+// import { useDispatch } from 'react-redux';
+// import { clearCart as clearCartAction } from '@/store/redux/cartSlice';
+// import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
 
 // ~Zustand方式
-// import { useCartStore } from '@/store/zustand/useCartStore';
+import { useCartStore } from '@/store/zustand/useCartStore';
 
 // type TProps = {
 //   cartItems: CartItem[];
@@ -27,18 +27,18 @@ const Cart: React.FC = () => {
   // const { cartItems, clearCart, getTotalPrice } = useCart();
 
   // ~Redux方式
-  const dispatch = useDispatch();
-  const cartItems = useCartItems();
-  const getTotalPrice = useTotalPrice();
-  const clearCart = () => {
-    dispatch(clearCartAction());
-  }
-  
+  // const dispatch = useDispatch();
+  // const cartItems = useCartItems();
+  // const getTotalPrice = useTotalPrice();
+  // const clearCart = () => {
+  //   dispatch(clearCartAction());
+  // }
+
 
   // ~Zustand方式
-  // const cartItems = useCartStore((s) => s.items);
-  // const clearCart = useCartStore((s) => s.clearCart);
-  // const getTotalPrice = useCartStore((s) => s.getTotalPrice() );
+  const cartItems = useCartStore((s) => s.items);
+  const clearCart = useCartStore((s) => s.clearCart);
+  const getTotalPrice = useCartStore((s) => s.getTotalPrice() );
 
 
   const handleFormatPrice = (price: number) => {
