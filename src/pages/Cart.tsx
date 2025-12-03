@@ -4,12 +4,12 @@ import React from 'react';
 import CartItemComponent from '../components/CartItem';
 
 // ~useContext + useReducer方式
-import { useCart } from '@/context/complex/CartContext'
+// import { useCart } from '@/context/complex/CartContext'
 
 // ~Redux方式
-// import { useDispatch } from 'react-redux';
-// import { clearCart as clearCartAction } from '@/store/redux/cartSlice';
-// import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
+import { useDispatch } from 'react-redux';
+import { clearCart as clearCartAction } from '@/store/redux/cartSlice';
+import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
 
 // ~Zustand方式
 // import { useCartStore } from '@/store/zustand/useCartStore';
@@ -24,15 +24,16 @@ import { useCart } from '@/context/complex/CartContext'
 const Cart: React.FC = () => {
 
   // ~useContext + useReducer方式
-  const { cartItems, clearCart, getTotalPrice } = useCart();
+  // const { cartItems, clearCart, getTotalPrice } = useCart();
 
   // ~Redux方式
-  // const dispatch = useDispatch();
-  // const cartItems = useCartItems();
-  // const getTotalPrice = useTotalPrice();
-  // const clearCart = () => {
-  //   dispatch(clearCartAction());
-  // }
+  const dispatch = useDispatch();
+  const cartItems = useCartItems();
+  const getTotalPrice = useTotalPrice();
+  const clearCart = () => {
+    dispatch(clearCartAction());
+  }
+  
 
   // ~Zustand方式
   // const cartItems = useCartStore((s) => s.items);
