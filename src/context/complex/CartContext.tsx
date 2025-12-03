@@ -51,8 +51,8 @@ type TProvid = {
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
-  getTotalItems: () => number;
-  getTotalPrice: () => number;
+  getTotalItems: number;
+  getTotalPrice: number;
 }
 
 // 4.初始狀態 ( 請注意通常初始的狀態會是一個物件 / 能隨時擴充)。
@@ -176,11 +176,11 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     dispatch({ type: 'CLEAR_CART' });
   };
 
-  const getTotalItems = () => {
+  const totalItems  = () => {
     return state.items.reduce((total, item) => total + item.quantity, 0);
   };
 
-  const getTotalPrice = () => {
+  const totalPrice  = () => {
     return state.items.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   };
 
@@ -190,8 +190,8 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     removeFromCart,
     updateQuantity,
     clearCart,
-    getTotalItems,
-    getTotalPrice,
+    getTotalItems : totalItems(),
+    getTotalPrice : totalPrice(),
   };
 
   return (
@@ -206,7 +206,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   );
 };
 
-// 使用方式
+// 元件-使用方式
 // import { CartProvider } from '@/context/complex/CartContext'
 // import Child from './components/Child'
 

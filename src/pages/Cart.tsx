@@ -4,7 +4,7 @@ import React from 'react';
 import CartItemComponent from '../components/CartItem';
 
 // ~useContext + useReducer方式
-// import { useCart } from '../context/CartContext';
+import { useCart } from '@/context/complex/CartContext'
 
 // ~Redux方式
 // import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ import CartItemComponent from '../components/CartItem';
 // import { useCartItems , useTotalPrice } from '@/store/redux/cartSelectors';
 
 // ~Zustand方式
-import { useCartStore } from '@/store/zustand/useCartStore';
+// import { useCartStore } from '@/store/zustand/useCartStore';
 
 // type TProps = {
 //   cartItems: CartItem[];
@@ -24,7 +24,7 @@ import { useCartStore } from '@/store/zustand/useCartStore';
 const Cart: React.FC = () => {
 
   // ~useContext + useReducer方式
-  // const { cartItems, clearCart, getTotalPrice } = useCart();
+  const { cartItems, clearCart, getTotalPrice } = useCart();
 
   // ~Redux方式
   // const dispatch = useDispatch();
@@ -35,9 +35,9 @@ const Cart: React.FC = () => {
   // }
 
   // ~Zustand方式
-  const cartItems = useCartStore((s) => s.items);
-  const clearCart = useCartStore((s) => s.clearCart);
-  const getTotalPrice = useCartStore((s) => s.getTotalPrice() );
+  // const cartItems = useCartStore((s) => s.items);
+  // const clearCart = useCartStore((s) => s.clearCart);
+  // const getTotalPrice = useCartStore((s) => s.getTotalPrice() );
 
 
   const handleFormatPrice = (price: number) => {

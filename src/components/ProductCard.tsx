@@ -5,14 +5,14 @@ import { SyntheticEvent } from 'react'
 import { Product } from '../types';
 
 // ~useContext + useReducer方式
-// import { useCart } from '../context/CartContext';
+import { useCart } from '@/context/complex/CartContext'
 
 // ~Redux方式
 // import { useDispatch } from 'react-redux';
 // import { addToCart } from '@/store/redux/cartSlice';
 
 // ~Zustand方式
-import { useCartStore } from '@/store/zustand/useCartStore';
+// import { useCartStore } from '@/store/zustand/useCartStore';
 
 type TProps = {
   product: Product
@@ -21,13 +21,13 @@ type TProps = {
 const ProductCard = ({ product }: TProps) => {
 
   // ~useContext + useReducer方式
-  // const { addToCart } = useCart();
+  const { addToCart } = useCart();
 
   // ~Redux方式
   // const dispatch = useDispatch();
 
   // ~Zustand方式
-  const addToCart = useCartStore((s) => s.addToCart);
+  // const addToCart = useCartStore((s) => s.addToCart);
   
 
   const handleAddToCart = () => {
