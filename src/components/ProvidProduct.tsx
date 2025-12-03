@@ -1,5 +1,5 @@
-import type { TProduct , TProvideProduct } from '@/context/ProductContext'
-import { ProductContext, useProduct } from '@/context/ProductContext'
+import type { TProduct , TProvideProduct } from '@/context/pure/ProductContext'
+import { ProductContext, useProduct } from '@/context/pure/ProductContext'
 import { useState } from 'react'
 
 // 父元件=> Provider DataContext

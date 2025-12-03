@@ -1,10 +1,20 @@
 import { createContext, useContext } from 'react'
 
+// 影響檔案
+// ```jsx
+// // 資料
+// context/ProductContext.tsx
+
+// // 元件
+// ProvidProduct.tsx
+// ```
+
 export type TProduct = {
   title: string
   price: number
 }
 
+// 背起來 很難記
 type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 
 export type TProvideProduct = {

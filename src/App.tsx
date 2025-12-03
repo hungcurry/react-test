@@ -4,13 +4,13 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 // ~useContext + useReducer方式
-// import { CartProvider } from './context/CartContext'
+// import { CartProvider } from '@/context/complex/CartContext'
 
 // ~Redux方式
 // import { Provider } from 'react-redux';
 // import { store } from '@/store/redux/store';
 
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar' 
 // Pages
 import Home from './pages/Home'
 import ProductList from './pages/ProductList'

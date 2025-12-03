@@ -70,7 +70,7 @@ export const useCart = () => {
   return context;
 }
 
-// 7. reducer：TS 自動推論 state 與 action 型別
+// 6. reducer：TS 自動推論 state 與 action 型別
 const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
   console.log(`state` , state);
   console.log(`action` , action);
@@ -156,7 +156,7 @@ const cartReducer = (state: TCartState, action: TCartAction): TCartState => {
   }
 };
 
-// 6. 父元件=> Provider
+// 7. 父元件=> Provider
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
@@ -196,7 +196,22 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   return (
     <CartContext.Provider value={ provideValue }>
+      {/* 使用 children 類似開 slot 功能 才有辦法引入其他元件 */}
+      {/* 並且 export const App */}
+      {/* import Child from './components/Child' */}
+      {/* <Child /> */}
+
       { children }
     </CartContext.Provider>
   );
 };
+
+// 使用方式
+// import { CartProvider } from '@/context/complex/CartContext'
+// import Child from './components/Child'
+
+// <CartProvider>
+//   <div className="App">
+//     <Child />
+//   </div>
+// </CartProvider>
