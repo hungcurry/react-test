@@ -22,8 +22,7 @@ const Navbar: React.FC = () => {
   // const getTotalItems = useTotalItems();
 
   // ~Zustand方式
-  const { getTotalItems } = useCartStore();
-  
+  const getTotalItems = useCartStore((s) => s.getTotalItems() );
 
   const navItems = [
     {
@@ -81,8 +80,7 @@ const Navbar: React.FC = () => {
             />
           </svg>
           {
-            getTotalItems() > 0 && <span className="cart-badge">{getTotalItems()}</span>
-            // getTotalItems > 0 && <span className="cart-badge">{ getTotalItems }</span>
+            getTotalItems > 0 && <span className="cart-badge">{ getTotalItems }</span>
           }
         </Link>
       </div>

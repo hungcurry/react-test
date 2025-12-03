@@ -27,7 +27,7 @@ const ProductCard = ({ product }: TProps) => {
   // const dispatch = useDispatch();
 
   // ~Zustand方式
-  const { addToCart } = useCartStore()
+  const addToCart = useCartStore((s) => s.addToCart);
   
 
   const handleAddToCart = () => {

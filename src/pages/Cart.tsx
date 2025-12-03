@@ -35,7 +35,10 @@ const Cart: React.FC = () => {
   // }
 
   // ~Zustand方式
-  const { items : cartItems, clearCart, getTotalPrice } = useCartStore();
+  const cartItems = useCartStore((s) => s.items);
+  const clearCart = useCartStore((s) => s.clearCart);
+  const getTotalPrice = useCartStore((s) => s.getTotalPrice() );
+
 
   const handleFormatPrice = (price: number) => {
     return new Intl.NumberFormat('zh-TW', {
@@ -101,8 +104,7 @@ const Cart: React.FC = () => {
 
           <div className="cart-summary">
             <div className="total-price">
-              總計：{handleFormatPrice(getTotalPrice())}
-              {/* 總計：{handleFormatPrice(getTotalPrice)} */}
+              總計：{handleFormatPrice(getTotalPrice)}
             </div>
 
             <button

@@ -26,7 +26,8 @@ const CartItemComponent= ({ data } : TProps) => {
   // const dispatch = useDispatch();
 
   // ~Zustand方式
-  const { updateQuantity, removeFromCart } = useCartStore();
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
+  const removeFromCart = useCartStore((s) => s.removeFromCart);
 
   const handleQuantityChange = (newQuantity: number) => {
     // ~useContext + useReducer方式
