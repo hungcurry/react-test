@@ -53,7 +53,7 @@ const App: React.FC = () => {
     //   </div>
     // </Provider>
 
-     // ~Zustand方式
+    // ~Zustand方式
     <div className="App">
       <Navbar />
 

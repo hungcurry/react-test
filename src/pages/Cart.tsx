@@ -33,8 +33,7 @@ const Cart: React.FC = () => {
   // const clearCart = () => {
   //   dispatch(clearCartAction());
   // }
-
-
+  
   // ~Zustand方式
   const cartItems = useCartStore((s) => s.items);
   const clearCart = useCartStore((s) => s.clearCart);

@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 // pnpm install immer
 import { immer } from 'zustand/middleware/immer'
-
+import { original } from "immer";
 // ----------- Types -----------
 type TProduct = {
   id: number;
@@ -153,6 +153,9 @@ export const useCartStore = create<TCartStore>()(
       addToCart: (product) => {
         set((state) => {
           // Immer 草稿階段 → console.log 看不到正常資料
+        console.log("draft:", state);               // Proxy
+        console.log("original:", original(state));  // 真正物件（像 RTK current）
+
           const existing = state.items.find((item) => item.product.id === product.id)
 
           if (existing) {
